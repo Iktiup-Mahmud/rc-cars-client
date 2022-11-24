@@ -1,0 +1,17 @@
+[
+    {
+        "name": "Tesla",
+        "img" : "https://i.pinimg.com/originals/62/4d/f0/624df0abe304bb27a03407b47b3317d9.png",
+        "details" : "Here you can find your Future Tesla car. So check it out"
+    },
+    {
+        "name": "Mercedes",
+        "img" : "https://cdn.pixabay.com/photo/2014/12/12/01/52/mercedes-564949__480.jpg",
+        "details" : "Here you can find your Future Mercedes car. So check it out"
+    },
+    {
+        "name": "Audi",
+        "img" : "https://i.pinimg.com/originals/b4/94/26/b4942604abe466089e7a87264e1de124.jpg",
+        "details" : "Here you can find your Future Audi car. So check it out"
+    }
+]

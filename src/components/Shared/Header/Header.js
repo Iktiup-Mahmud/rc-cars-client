@@ -1,13 +1,19 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import logo from '../../../assets/logo1.png'
+import { AuthContext } from '../../../context/AuthProvider/AuthProvider';
 
 const Header = () => {
+
+    const { user } = useContext(AuthContext)
 
     const menuItems = <React.Fragment>
         <li><Link to='/home'>Home</Link></li>
         <li><Link to='/home'>Categories</Link></li>
 
     </React.Fragment>
+
+    console.log(user)
 
     return (
         <div>
@@ -21,7 +27,10 @@ const Header = () => {
                             {menuItems}
                         </ul>
                     </div>
-                    <Link className="btn btn-ghost normal-case text-xl">daisyUI</Link>
+                    <Link className="btn btn-ghost normal-case text-xl w-36 pr-0">
+                        <img src={logo} alt="" srcSet="" />
+                    </Link>
+                    <h1 className='text-2xl font-bold'>RC Cars</h1>
                 </div>
                 <div className="navbar-center hidden lg:flex">
                     <ul className="menu menu-horizontal p-0">
@@ -29,7 +38,7 @@ const Header = () => {
                     </ul>
                 </div>
                 <div className="navbar-end">
-                    <p className="btn btn-warning">Get started</p>
+                    <Link to='/login' className="btn btn-warning">Login</Link>
                 </div>
             </div>
         </div>
