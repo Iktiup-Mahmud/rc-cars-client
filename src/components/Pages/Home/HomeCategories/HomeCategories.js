@@ -1,20 +1,29 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import HomeCategoriCard from '../HomeCategoriCard/HomeCategoriCard';
 
 const HomeCategories = () => {
 
+    const [categories, setCategories] = useState([])
+
+    console.log(categories)
+
+    useEffect(() => {
+        fetch(`${process.env.REACT_APP_server_url}/categories`)
+            .then(res => res.json())
+            .then(data => {
+                setCategories(data)
+            })
+    }, [])
 
 
     return (
-        <div className='my-24'>
-            <h1 className='text-5xl font-bold'>Categories</h1>
-            <div className="card card-compact w-96 bg-base-100 shadow-xl">
-                <figure><img src="https://placeimg.com/400/225/arch" alt="Shoes" /></figure>
-                <div className="card-body">
-                    <h2 className="card-title">Shoes!</h2>
-                    <p>If a dog chews shoes whose shoes does he choose?</p>
-                    <div className="card-actions justify-end">
-                        <button className="btn btn-primary">Buy Now</button>
-                    </div>
+        <div className='my-10'>
+            <h1 className='text-5xl my-10'>Categories</h1>
+            <div className='mx-auto'>
+                <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-20 mx-10'>
+                    {
+                        categories.map(category => <HomeCategoriCard key={category._id} category={category}></HomeCategoriCard>)
+                    }
                 </div>
             </div>
         </div>

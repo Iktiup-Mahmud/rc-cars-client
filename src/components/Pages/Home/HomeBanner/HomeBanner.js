@@ -8,8 +8,7 @@ const HomeBanner = () => {
                 <div className="hero-overlay bg-opacity-70"></div>
                 <div className="hero-content text-center text-neutral-content">
                     <div className="max-w-md">
-                        <h1 className="mb-5 text-2xl font-bold text-white">Hello there,</h1>
-                        <h1 className="mb-5 text-3xl font-bold text-white">Wellcome To</h1>
+                        <h1 className="mb-5 text-3xl font-bold text-white">Hello there, Wellcome To</h1>
                         <h1 className="mb-5 text-5xl font-bold text-warning">RC Cars.</h1>
                         <p className="mb-5">It is platform for resell cars. You can buy and sell your used cars here. Quaerat fugiat ut assumenda excepturi exercitationem quasi. In deleniti eaque aut repudiandae et a id nisi.</p>
                         <button className="btn btn-warning">Get Started</button>

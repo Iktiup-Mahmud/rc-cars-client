@@ -5,11 +5,11 @@ import { AuthContext } from '../../../context/AuthProvider/AuthProvider';
 
 const Header = () => {
 
-    const { user } = useContext(AuthContext)
+    const { user, logOut } = useContext(AuthContext)
 
     const menuItems = <React.Fragment>
         <li><Link to='/home'>Home</Link></li>
-        <li><Link to='/home'>Categories</Link></li>
+        <li><Link to='/categories'>Categories</Link></li>
 
     </React.Fragment>
 
@@ -38,7 +38,13 @@ const Header = () => {
                     </ul>
                 </div>
                 <div className="navbar-end">
-                    <Link to='/login' className="btn btn-warning">Login</Link>
+                    {
+                        user 
+                        ?
+                            <Link onClick={logOut} className="btn btn-warning">LogOut</Link>
+                        :
+                            <Link to='/login' className="btn btn-warning">Login</Link>
+                    }
                 </div>
             </div>
         </div>
