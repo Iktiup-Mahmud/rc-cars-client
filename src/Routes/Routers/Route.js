@@ -5,7 +5,9 @@ import Categories from "../../components/Pages/Categories/Categories";
 import Category from "../../components/Pages/Category/Category";
 import Home from "../../components/Pages/Home/Home/Home";
 import Page404 from "../../components/Shared/page404/Page404";
+import DashBoardLayout from "../../layout/DashBoardLayout";
 import Main from "../../layout/Main";
+import PrivetRoute from "../PrivetRoute/PrivetRoute";
 
 
 export const router = createBrowserRouter([
@@ -39,6 +41,10 @@ export const router = createBrowserRouter([
                 element: <SignUp></SignUp>
             }
         ]
+    },
+    {
+        path: '/dashboard',
+        element: <PrivetRoute><DashBoardLayout></DashBoardLayout></PrivetRoute>
     },
     {
         path: '*',

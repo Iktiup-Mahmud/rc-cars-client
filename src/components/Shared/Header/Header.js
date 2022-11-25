@@ -13,7 +13,7 @@ const Header = () => {
 
     </React.Fragment>
 
-    console.log(user)
+    // console.log(user)
 
     return (
         <div>
@@ -41,7 +41,10 @@ const Header = () => {
                     {
                         user 
                         ?
-                            <Link onClick={logOut} className="btn btn-warning">LogOut</Link>
+                            <>
+                                <Link to='/dashboard' className="btn btn-ghost">Dashboard</Link>
+                                <Link onClick={logOut} className="btn btn-warning">LogOut</Link>
+                            </>
                         :
                             <Link to='/login' className="btn btn-warning">Login</Link>
                     }

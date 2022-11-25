@@ -18,9 +18,8 @@ const Categories = () => {
         return <progress className="progress w-56"></progress>
     }
 
-    // console.log(data)
     const categories = data.data
-    console.log(categories)
+    // console.log(categories)
 
     return (
         <div className='mt-10 mb-28'>
