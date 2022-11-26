@@ -6,7 +6,6 @@ const SingleProduct = ({ product }) => {
     const { name, img, location, resale_price, original_price, years_of_use, posted_time, seller_name, isVerifyed } = product
 
     const [modalData, setModalData] = useState(null)
-    console.log(modalData)
 
     return (
         <div className="card w-96 bg-base-100 shadow-xl">

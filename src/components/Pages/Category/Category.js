@@ -1,12 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useLoaderData } from 'react-router-dom';
-import BookingModal from './BookingModal';
 import SingleProduct from './SingleProduct';
 
 const Category = () => {
     const products = useLoaderData();
-
-    const {name} = products;
     
     return (
         <div className=' mb-20'>
@@ -16,7 +13,6 @@ const Category = () => {
                     products.map(product => <SingleProduct key={product._id} product={product}></SingleProduct>)
                 }
             </div>
-            {/* <BookingModal name={name}></BookingModal> */}
         </div>
     );
 };

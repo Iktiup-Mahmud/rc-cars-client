@@ -3,6 +3,7 @@ import Login from "../../components/Authentication/Login/Login";
 import SignUp from "../../components/Authentication/SignUp/SignUp";
 import Categories from "../../components/Pages/Categories/Categories";
 import Category from "../../components/Pages/Category/Category";
+import MyBookings from "../../components/Pages/Dashboard/MyBookings/MyBookings";
 import Home from "../../components/Pages/Home/Home/Home";
 import Page404 from "../../components/Shared/page404/Page404";
 import DashBoardLayout from "../../layout/DashBoardLayout";
@@ -29,7 +30,7 @@ export const router = createBrowserRouter([
             },
             {
                 path: '/categories/:name',
-                element: <Category></Category>,
+                element: <PrivetRoute><Category></Category></PrivetRoute>,
                 loader: ({ params }) => fetch(`${process.env.REACT_APP_server_url}/categories/${params.name}`)
             },
             {
@@ -44,7 +45,13 @@ export const router = createBrowserRouter([
     },
     {
         path: '/dashboard',
-        element: <PrivetRoute><DashBoardLayout></DashBoardLayout></PrivetRoute>
+        element: <PrivetRoute><DashBoardLayout></DashBoardLayout></PrivetRoute>,
+        children: [
+            {
+                path: '/dashboard',
+                params: <MyBookings></MyBookings>
+            }
+        ]
     },
     {
         path: '*',

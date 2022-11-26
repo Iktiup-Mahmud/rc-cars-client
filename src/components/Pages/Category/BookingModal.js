@@ -27,10 +27,25 @@ const BookingModal = ({ modalData, setModalData }) => {
             location
         }
 
-        toast.success('Abol tabol')
-
-        // console.log(orderData)
-        setModalData(null)
+        fetch(`${process.env.REACT_APP_server_url}/bookings`, {
+            method: 'POST',
+            headers: {
+                'content-type' : 'application/json'
+            },
+            body: JSON.stringify(orderData)
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data)
+                if (data.acknowledged){
+                    setModalData(null)
+                    toast.success('Booked successfully')
+                }
+            })
+            .catch(err => {
+                console.error(err.message)
+                toast.error('Somethig wrong happened.')
+            })
         
 
 
@@ -41,7 +56,7 @@ const BookingModal = ({ modalData, setModalData }) => {
             <input type="checkbox" id="booking-modal" className="modal-toggle" />
             <div className="modal">
                 <div className="modal-box relative">
-                    <label htmlFor="booking-modal" className="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
+                    <label onClick={() => setModalData(null)} htmlFor="booking-modal" className="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
                     <h3 className="text-lg font-bold">Book {modalData.name} now</h3>
                     <form onSubmit={handelOrder} className='mt-5 text-center'>
                         <div className="form-control w-full">
@@ -72,13 +87,13 @@ const BookingModal = ({ modalData, setModalData }) => {
                             <label className="label">
                                 <span className="label-text">Phone Number</span>
                             </label>
-                            <input name='phone' type="text" placeholder="Phone Number" className="input input-bordered w-full" />
+                            <input name='phone' type="text" required placeholder="Phone Number" className="input input-bordered w-full" />
                         </div>
                         <div className="form-control w-full">
                             <label className="label">
                                 <span className="label-text">Meeting Location</span>
                             </label>
-                            <input name='meeting_location' type="text" placeholder="Meeting Location" className="input input-bordered w-full" />
+                            <input name='meeting_location' type="text" required placeholder="Meeting Location" className="input input-bordered w-full" />
                         </div>
                         <input type="submit" value="Submit" className='btn btn-accent mt-5 w-full' />
                     </form>
