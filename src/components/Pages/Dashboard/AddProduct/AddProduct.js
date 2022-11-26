@@ -4,8 +4,6 @@ import { AuthContext } from '../../../../context/AuthProvider/AuthProvider';
 const AddProduct = () => {
     const { user } = useContext(AuthContext)
 
-    const formData = new FormData();
-
     const handelSubmit = e => {
         e.preventDefault()
 
@@ -19,31 +17,64 @@ const AddProduct = () => {
         const years_of_use = form.years_of_use.value
         const resale_price = form.resale_price.value
         const original_price = form.original_price.value
-        const isAdvertised = false
+        const isAdvertised = "false"
+        const img = form.img.files[0]
 
-        const product = {
-            name,
-            category,
-            location,
-            resale_price,
-            original_price,
-            years_of_use,
-            posted_time,
-            seller_name,
-            seller_email,
-            isAdvertised
-        }
+        const imgbbURL = `https://api.imgbb.com/1/upload?key=${process.env.REACT_APP_imgbb_key}`
 
-        // console.log(seller_name, name, email, posted_time, years_of_use, category)
-        console.log(product)
+        const formData = new FormData()
+        formData.append('image', img)
+        fetch(imgbbURL, {
+            method: 'POST',
+            body: formData
+        })
+            .then(res => res.json())
+            .then(imgData => {
+                if (imgData) {
+                    const product = {
+                        name,
+                        category,
+                        location,
+                        resale_price,
+                        original_price,
+                        years_of_use,
+                        posted_time,
+                        seller_name,
+                        seller_email,
+                        isAdvertised,
+                        img: imgData.data.url
+                    }
+
+                    console.log(product)
+                    fetch(`${process.env.REACT_APP_server_url}/addproduct`, {
+                        method: 'POST',
+                        headers: {
+                            'content-type': 'application/json'
+                        },
+                        body: JSON.stringify(product)
+                    })
+                        .then(res => res.json())
+                        .then(data => {
+                            console.log(data)
+                        })
+                }
+            })
+
+
+
+
+
+        console.log(img)
+        // console.log(product)
     }
 
+    console.log(process.env.REACT_APP_imgbb_key)
     return (
         <div className='mx-10 my-10'>
             <h1 className='text-3xl mb-7 font-semibold'>Add A Product</h1>
             <div className="card bg-slate-200 shadow-xl md:mx-20">
                 <div className="card-body">
-                    <h1 className='text-center font-semibold text-3xl mx-10 text-warning'>Please provide the info to add a product</h1>
+                    <h1 className='text-center font-semibold text-3xl mx-10 text-warning'>Please provide the info to add a product!</h1>
                     <form onSubmit={handelSubmit} className='mx-5'>
 
                         <div className="form-control w-full">
@@ -64,7 +95,7 @@ const AddProduct = () => {
                             <label className="label">
                                 <span className="label-text">Product Image</span>
                             </label>
-                            <input type="file" required className="file-input w-full" />
+                            <input type="file" name='img' required className="file-input file-input-bordered file-input-warning" />
                         </div>
 
                         <div className="form-control w-full">

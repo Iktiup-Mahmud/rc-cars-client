@@ -1,12 +1,17 @@
-import React, { useContext } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useContext, useState } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { FaGoogle } from "react-icons/fa";
 import toast from 'react-hot-toast'
 import { AuthContext } from '../../../context/AuthProvider/AuthProvider';
+import { GoogleAuthProvider } from 'firebase/auth';
 
 const SignUp = () => {
-
+    const [error, setError] = useState('');
     const { createUser, loginProvider } = useContext(AuthContext)
+    const providerGoogle = new GoogleAuthProvider();
+    const navigate = useNavigate();
+    const location = useLocation();
+    const from = location.state?.from?.pathname || '/'
 
     const handelSubmit = (e) => {
         e.preventDefault()
@@ -15,6 +20,7 @@ const SignUp = () => {
         const name = form.name.value
         const email = form.email.value
         const password = form.password.value
+        const usert = form.radio.value
 
         const user = {
             name,
@@ -22,16 +28,28 @@ const SignUp = () => {
             password
         }
 
-        createUser(email, password)
-            .then(res => {
-                console.log(res.user)
-                toast.success('User created successfully.')
-            })
+        // createUser(email, password)
+        //     .then(res => {
+        //         console.log(res.user)
+        //         toast.success('User created successfully.')
+        //     })
 
-        console.log(user)
-
-        
+        // console.log(user)
     }
+
+    const handelGoogleLogin = () => {
+        loginProvider(providerGoogle)
+            .then(res => {
+                const user = res.user;
+                console.log(user)
+                navigate(from, { replace: true })
+            })
+            .catch(error => {
+                setError(error.message)
+                console.error(error)
+            })
+    }
+
 
     return (
         <div className="hero min-h-screen bg-base-200">
@@ -65,17 +83,29 @@ const SignUp = () => {
                                 <span className="label-text">Password</span>
                             </label>
                             <input name='password' type="password" placeholder="password" className="input input-bordered" />
-
-                            <label className="label">
-                                <Link href="#" className="label-text-alt link link-hover">Forgot password?</Link>
-                            </label>
                         </div>
+
+
+                        <div className='mt-2'>
+                            <h1 className='font-semibold'>Please select the role of a user</h1>
+                            <div className='flex justify-evenly mt-2'>
+                                <div className="flex items-center">
+                                    <input defaultChecked id="default-radio-1" type="radio" value="normal" name="radio" className="radio radio-accent" />
+                                    <label htmlFor="default-radio-1" className="ml-2 text-sm font-medium">Normal</label>
+                                </div>
+                                <div className="flex items-center">
+                                    <input id="default-radio-2" type="radio" value="seller" name="radio" className="radio radio-accent" />
+                                    <label htmlFor="default-radio-2" className="ml-2 text-sm font-medium">Seller</label>
+                                </div>
+                            </div>
+                        </div>
+
                         <div className="form-control mt-2">
                             <button className="btn btn-primary font-bold">Signup</button>
                         </div>
                         <div className="divider">OR</div>
                         <div className="form-control">
-                            <button className="btn btn-primary">
+                            <button onClick={handelGoogleLogin} className="btn btn-primary">
                                 <div className='flex justify-between'>
                                     <FaGoogle className='' />
                                     <p className='pl-3 font-bold'>Google</p>
