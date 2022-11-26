@@ -12,6 +12,7 @@ const BookingModal = ({ modalData, setModalData }) => {
 
         const form = e.target
         const productName = form.productName.value;
+        const productImg = form.productImg.value;
         const c_name = form.name.value;
         const email = form.email.value;
         const price = form.price.value;
@@ -20,6 +21,7 @@ const BookingModal = ({ modalData, setModalData }) => {
 
         const orderData = {
             productName,
+            productImg,
             c_name,
             email, 
             price,
@@ -46,10 +48,10 @@ const BookingModal = ({ modalData, setModalData }) => {
                 console.error(err.message)
                 toast.error('Somethig wrong happened.')
             })
-        
-
-
+            
+            console.log(orderData)
     }
+
 
     return (
         <div>
@@ -57,13 +59,19 @@ const BookingModal = ({ modalData, setModalData }) => {
             <div className="modal">
                 <div className="modal-box relative">
                     <label onClick={() => setModalData(null)} htmlFor="booking-modal" className="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
-                    <h3 className="text-lg font-bold">Book {modalData.name} now</h3>
+                    <h3 className="text-lg font-bold">Book {modalData?.name} now</h3>
                     <form onSubmit={handelOrder} className='mt-5 text-center'>
                         <div className="form-control w-full">
                             <label className="label">
                                 <span className="label-text">Product name</span>
                             </label>
-                            <input type="text" name='productName' placeholder="Type here" value={modalData.name} className="input input-bordered w-full" disabled />
+                            <input type="text" name='productName' placeholder="Type here" value={modalData?.name} className="input input-bordered w-full" disabled />
+                        </div>
+                        <div className="form-control w-full">
+                            <label className="label">
+                                <span className="label-text">Product image</span>
+                            </label>
+                            <input type="text" name='productImg' placeholder="Type here" value={modalData?.img} className="input input-bordered w-full" disabled />
                         </div>
                         <div className="form-control w-full">
                             <label className="label">
@@ -81,7 +89,7 @@ const BookingModal = ({ modalData, setModalData }) => {
                             <label className="label">
                                 <span className="label-text">Price</span>
                             </label>
-                            <input name='price' type="text" defaultValue={`${modalData.resale_price}$`} disabled placeholder="Price" className="input input-bordered w-full" />
+                            <input name='price' type="text" defaultValue={`${modalData?.resale_price}$`} disabled placeholder="Price" className="input input-bordered w-full" />
                         </div>
                         <div className="form-control w-full">
                             <label className="label">

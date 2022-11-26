@@ -15,7 +15,7 @@ const Categories = () => {
     })
 
     if(isLoading){
-        return <progress className="progress w-56 my-36"></progress>
+        return <progress className="progress w-56 my-10"></progress>
     }
 
     const categories = data.data

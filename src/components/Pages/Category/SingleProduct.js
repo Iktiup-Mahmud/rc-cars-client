@@ -26,7 +26,7 @@ const SingleProduct = ({ product }) => {
                 <p className='text-left text-lg'>Years Of Use: {years_of_use}</p>
                 <p className='text-left text-lg'>Posted Time: {posted_time}</p>
                 <div className="card-actions justify-center my-5">
-                    <label htmlFor="booking-modal" onClick={() => setModalData({name, resale_price})} className="btn btn-warning">Book Now</label>
+                    <label htmlFor="booking-modal" onClick={() => setModalData({ name, resale_price, img })} className="btn btn-warning">Book Now</label>
                 </div>
             </div>
             {

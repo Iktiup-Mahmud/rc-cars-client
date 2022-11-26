@@ -8,7 +8,7 @@ const DashBoardLayout = () => {
             <Header></Header>
             <div className="drawer drawer-mobile">
                 <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
-                <div className="drawer-content flex flex-col items-center justify-center">
+                <div className="drawer-content text-left">
                     <Outlet></Outlet>
                     <label htmlFor="my-drawer-2" className="btn btn-primary drawer-button lg:hidden">Open drawer</label>
 
@@ -17,7 +17,7 @@ const DashBoardLayout = () => {
                     <label htmlFor="my-drawer-2" className="drawer-overlay"></label>
                     <ul className="menu p-4 w-80 bg-base-100 text-base-content">
                         {/* <!-- Sidebar content here --> */}
-                        <li><Link>1</Link></li>
+                        <li><Link to='/dashboard/mybookings'>My Bookings</Link></li>
                         <li><Link>2</Link></li>
                     </ul>
 

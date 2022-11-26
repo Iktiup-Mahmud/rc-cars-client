@@ -48,8 +48,8 @@ export const router = createBrowserRouter([
         element: <PrivetRoute><DashBoardLayout></DashBoardLayout></PrivetRoute>,
         children: [
             {
-                path: '/dashboard',
-                params: <MyBookings></MyBookings>
+                path: '/dashboard/mybookings',
+                element: <MyBookings></MyBookings>
             }
         ]
     },
