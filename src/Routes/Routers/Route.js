@@ -3,6 +3,7 @@ import Login from "../../components/Authentication/Login/Login";
 import SignUp from "../../components/Authentication/SignUp/SignUp";
 import Categories from "../../components/Pages/Categories/Categories";
 import Category from "../../components/Pages/Category/Category";
+import AddProduct from "../../components/Pages/Dashboard/AddProduct/AddProduct";
 import MyBookings from "../../components/Pages/Dashboard/MyBookings/MyBookings";
 import Home from "../../components/Pages/Home/Home/Home";
 import Page404 from "../../components/Shared/page404/Page404";
@@ -50,6 +51,10 @@ export const router = createBrowserRouter([
             {
                 path: '/dashboard/mybookings',
                 element: <MyBookings></MyBookings>
+            },
+            {
+                path: '/dashboard/add-product',
+                element: <AddProduct></AddProduct>
             }
         ]
     },
