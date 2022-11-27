@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import toast from 'react-hot-toast';
 import { AuthContext } from '../../../../context/AuthProvider/AuthProvider';
 
 const AddProduct = () => {
@@ -18,6 +19,7 @@ const AddProduct = () => {
         const resale_price = form.resale_price.value
         const original_price = form.original_price.value
         const isAdvertised = "false"
+        const isReported = "false"
         const img = form.img.files[0]
 
         const imgbbURL = `https://api.imgbb.com/1/upload?key=${process.env.REACT_APP_imgbb_key}`
@@ -42,6 +44,7 @@ const AddProduct = () => {
                         seller_name,
                         seller_email,
                         isAdvertised,
+                        isReported,
                         img: imgData.data.url
                     }
 
@@ -56,19 +59,12 @@ const AddProduct = () => {
                         .then(res => res.json())
                         .then(data => {
                             console.log(data)
+                            toast.success(`${name} added successfully`)
+                            form.reset()
                         })
                 }
             })
-
-
-
-
-
-        console.log(img)
-        // console.log(product)
     }
-
-    console.log(process.env.REACT_APP_imgbb_key)
     return (
         <div className='mx-10 my-10'>
             <h1 className='text-3xl mb-7 font-semibold'>Add A Product</h1>

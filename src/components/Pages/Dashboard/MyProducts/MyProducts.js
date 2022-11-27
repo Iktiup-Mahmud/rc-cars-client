@@ -1,21 +1,30 @@
 import { useQuery } from '@tanstack/react-query';
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { AuthContext } from '../../../../context/AuthProvider/AuthProvider';
+import ConfirmationModal from '../../../Shared/ConfirmationModal/ConfirmationModal';
 
-const MyBookings = () => {
-
+const MyProducts = () => {
     const { user } = useContext(AuthContext)
+    const [deleteProduct, setDeleteProduct] = useState(null)
 
-    const url = `${process.env.REACT_APP_server_url}/bookings?email=${user?.email}`
+    const url = `${process.env.REACT_APP_server_url}/myproducts?email=${user?.email}`
 
-    const { data: bookings = [], isLoading } = useQuery({
-        queryKey: ['bookings', user?.email],
+    const { data: products = [], isLoading, refetch } = useQuery({
+        queryKey: ['products', user?.email],
         queryFn: async () => {
             const res = await fetch(url)
-            const data = res.json()
+            const data = await res.json()
             return data
         }
     })
+
+    const handelDeleteProduct = (product) => {
+        console.log(product)
+    }
+
+    const closeModal = () => {
+        setDeleteProduct(null)
+    }
 
     if (isLoading) {
         return <div className="flex justify-center items-center">
@@ -29,10 +38,11 @@ const MyBookings = () => {
         </div>
     }
 
-    console.log(bookings)
+    console.log(products)
+
     return (
         <div>
-            <h1 className='text-3xl mb-7 font-semibold'>My Bookings</h1>
+            <h1 className='text-3xl mb-7 font-semibold'>My Products</h1>
             <div>
                 <div className="overflow-x-auto w-full">
                     <table className="table w-full">
@@ -41,14 +51,16 @@ const MyBookings = () => {
                                 <th></th>
                                 <th>Image</th>
                                 <th>Name</th>
-                                <th>Email</th>
+                                <th>Category</th>
                                 <th>Price</th>
-                                <th>Pay</th>
+                                <th>Sale State</th>
+                                <th>Delete</th>
+                                <th>Advertise</th>
                             </tr>
                         </thead>
                         <tbody>
-                            { bookings && 
-                                bookings?.map((booking, i) => <tr className="hover" key={booking._id}>
+                            {products &&
+                                products?.map((product, i) => <tr className="hover" key={product._id}>
                                     <th>
                                         {i + 1}
                                     </th>
@@ -56,16 +68,20 @@ const MyBookings = () => {
                                         <div className="flex items-center space-x-3">
                                             <div className="avatar">
                                                 <div className="mask mask-squircle w-12 h-12">
-                                                    <img src={booking?.productImg} alt="img" />
+                                                    <img src={product?.img} alt="img" />
                                                 </div>
                                             </div>
                                         </div>
                                     </td>
+                                    <td>{product?.name}</td>
+                                    <td>{product?.category}</td>
+                                    <td>{product?.resale_price}</td>
                                     <td>
-                                        {booking?.productName}
+                                        <button className='btn btn-warning btn-xs'>Abailable</button>
                                     </td>
-                                    <td>{booking?.email}</td>
-                                    <td>{booking?.price}</td>
+                                    <td>
+                                        <label onClick={() => setDeleteProduct(product)} htmlFor="confirmation-modal" className="btn btn-error btn-xs">Delete</label>
+                                    </td>
                                     <td>
                                         <button className="btn btn-warning btn-xs">Pay Now</button>
                                     </td>
@@ -75,9 +91,22 @@ const MyBookings = () => {
 
                     </table>
                 </div>
+                {
+                    deleteProduct &&
+                    <ConfirmationModal
+                        title={`Are you sure you want to delete?`}
+                        message={`If you delete ${deleteProduct?.name}. You will unable to restore it ever.`}
+                        successAction={handelDeleteProduct}
+                        buttonContent="Delete" 
+                        modalData={deleteProduct}
+                        closeModal={closeModal}
+                    >
+
+                    </ConfirmationModal>
+                }
             </div>
         </div>
     );
 };
 
-export default MyBookings;
+export default MyProducts;

@@ -7,7 +7,7 @@ import { GoogleAuthProvider } from 'firebase/auth';
 
 const SignUp = () => {
     const [error, setError] = useState('');
-    const { createUser, loginProvider } = useContext(AuthContext)
+    const { createUser, loginProvider, updateUserProfile } = useContext(AuthContext)
     const providerGoogle = new GoogleAuthProvider();
     const navigate = useNavigate();
     const location = useLocation();
@@ -22,19 +22,25 @@ const SignUp = () => {
         const password = form.password.value
         const usert = form.radio.value
 
-        const user = {
-            name,
-            email,
-            password
-        }
-
-        // createUser(email, password)
-        //     .then(res => {
-        //         console.log(res.user)
-        //         toast.success('User created successfully.')
-        //     })
-
-        // console.log(user)
+        createUser(email, password)
+            .then(res => {
+                console.log(res.user)
+                toast.success('User created successfully.')
+                const userInfo = {
+                    displayName: name
+                }
+                updateUserProfile(userInfo)
+                    .then( () => {
+                        saveUserToDB(name, email, usert)
+                        console.log('ok')
+                        form.reset()
+                        navigate(from, { replace: true })
+                    })
+            })
+            .catch(err => {
+                console.error(err.message)
+                toast.error(err.message)
+            })
     }
 
     const handelGoogleLogin = () => {
@@ -50,6 +56,23 @@ const SignUp = () => {
             })
     }
 
+    const saveUserToDB = (name, email, role) => {
+        const user = {name, email, role}
+        fetch(`${process.env.REACT_APP_server_url}/adduser`, {
+            method: 'POST',
+            headers: {
+                'content-type' : 'application/json'
+            },
+            body: JSON.stringify(user) 
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log('saver user', data)
+            })
+            .catch(err => {
+                console.error(err)
+            })
+    }
 
     return (
         <div className="hero min-h-screen bg-base-200">

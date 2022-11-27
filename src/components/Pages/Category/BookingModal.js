@@ -77,7 +77,7 @@ const BookingModal = ({ modalData, setModalData }) => {
                             <label className="label">
                                 <span className="label-text">your Name</span>
                             </label>
-                            <input name='name' type="text" placeholder="Your Name" defaultValue={user?.displayName} required className="input input-bordered w-full" />
+                            <input name='name' type="text" placeholder="Your Name" disabled defaultValue={user?.displayName} required className="input input-bordered w-full" />
                         </div>
                         <div className="form-control w-full">
                             <label className="label">
