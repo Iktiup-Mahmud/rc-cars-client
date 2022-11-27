@@ -48,7 +48,6 @@ const BookingModal = ({ modalData, setModalData }) => {
                 console.error(err.message)
                 toast.error('Somethig wrong happened.')
             })
-            
             console.log(orderData)
     }
 
@@ -103,7 +102,7 @@ const BookingModal = ({ modalData, setModalData }) => {
                             </label>
                             <input name='meeting_location' type="text" required placeholder="Meeting Location" className="input input-bordered w-full" />
                         </div>
-                        <input type="submit" value="Submit" className='btn btn-accent mt-5 w-full' />
+                        <input type="submit" value="Submit" className='btn btn-warning mt-5 w-full' />
                     </form>
                 </div>
             </div>

@@ -1,11 +1,29 @@
+import { useQuery } from '@tanstack/react-query';
 import React, { useState } from 'react';
 import { FaCheckSquare } from "react-icons/fa";
+import Loading from '../../Shared/Loading/Loading';
 import BookingModal from './BookingModal';
 
 const SingleProduct = ({ product }) => {
-    const { name, img, location, resale_price, original_price, years_of_use, posted_time, seller_name, isVerifyed } = product
+    const { name, img, location, resale_price, original_price, years_of_use, posted_time, seller_name, seller_email } = product
 
     const [modalData, setModalData] = useState(null)
+
+    const { data : isVerified = false , isLoading, refetch } = useQuery({
+        queryKey: ['products', seller_email],
+        queryFn: async () => {
+            const res = await fetch(`${process.env.REACT_APP_server_url}/sellerMailVerify?email=${seller_email}`)
+            const data = await res.json()
+            return data
+        }
+    })
+    
+    refetch()
+
+    if(isLoading){
+        return <Loading></Loading>
+    }
+    console.log(seller_email, isVerified)
 
     return (
         <div className="card w-96 bg-base-100 shadow-xl">
@@ -15,7 +33,7 @@ const SingleProduct = ({ product }) => {
                 <div className='flex'>
                     <p className='text-left font-semibold text-xl'>Seller Name: {seller_name}</p>
                     {
-                        isVerifyed === 'true'
+                        (isVerified === true)
                         ? <FaCheckSquare className='align-center ml-2 mt-2 text-blue-600'></FaCheckSquare>
                         : <></>
                     }

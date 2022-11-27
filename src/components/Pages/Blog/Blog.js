@@ -91,11 +91,11 @@ const Blog = () => {
                     <p>
                         <strong>Angular: </strong>Angular, developed by Google, was first released in 2010, making it the oldest of the lot.It is a TypeScript-based JavaScript framework.A substantial shift occurred in 2016 on the release of Angular 2 (and the dropping of the “JS” from the original name – AngularJS).Angular 2+ is known as just Angular.Although AngularJS (version 1) still gets updates, we will focus the discussion on Angular. </p>
 
-                        <br /><br />
+                        <br />
                         <strong>VUE :</strong> Vue, also known as Vue.js, is the youngest member of the group. It was developed by ex-Google employee Evan You in 2014. Over the last several years, Vue has seen a substantial shift in popularity, even though it doesn’t have the backing of a large company. The most current version is always announced on the official Vue website on their releases page. Contributors for Vue are supported by Patreon. It should be noted that Vue also has its own GitHub repo, and functions using TypeScript.
 
-                        <br /><br />
-
+                        <br />
+                        
                         <strong>React :</strong>React, developed by Facebook, was initially released in 2013. Facebook uses React extensively in their products (Facebook, Instagram, and WhatsApp). Similar to Vue, the React developers also announce their newest version on the blog section of the React website.
                 </div>
             </div>

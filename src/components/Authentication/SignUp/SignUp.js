@@ -21,6 +21,7 @@ const SignUp = () => {
         const email = form.email.value
         const password = form.password.value
         const usert = form.radio.value
+        const isVerified = "false"
 
         createUser(email, password)
             .then(res => {
@@ -31,7 +32,7 @@ const SignUp = () => {
                 }
                 updateUserProfile(userInfo)
                     .then( () => {
-                        saveUserToDB(name, email, usert)
+                        saveUserToDB(name, email, usert, isVerified)
                         console.log('ok')
                         form.reset()
                         navigate(from, { replace: true })
@@ -57,7 +58,7 @@ const SignUp = () => {
     }
 
     const saveUserToDB = (name, email, role) => {
-        const user = {name, email, role}
+        const user = { name, email, role }
         fetch(`${process.env.REACT_APP_server_url}/adduser`, {
             method: 'POST',
             headers: {
