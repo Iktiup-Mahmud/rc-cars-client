@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import React, { useContext, useState } from 'react';
+import toast from 'react-hot-toast';
 import { AuthContext } from '../../../../context/AuthProvider/AuthProvider';
 import ConfirmationModal from '../../../Shared/ConfirmationModal/ConfirmationModal';
 
@@ -19,7 +20,17 @@ const MyProducts = () => {
     })
 
     const handelDeleteProduct = (product) => {
-        console.log(product)
+        fetch(`${process.env.REACT_APP_server_url}/deleteProduct/${product._id}`,{
+            method: 'DELETE'
+        })
+            .then(res => res.json())
+            .then(result => {
+                console.log(result)
+                if (result.deletedCount > 0) {
+                    refetch()
+                    toast.success(`Doctor ${product.name} deleted successfully`)
+                }
+            })
     }
 
     const closeModal = () => {
@@ -37,8 +48,6 @@ const MyProducts = () => {
             </div>
         </div>
     }
-
-    console.log(products)
 
     return (
         <div>
@@ -83,7 +92,7 @@ const MyProducts = () => {
                                         <label onClick={() => setDeleteProduct(product)} htmlFor="confirmation-modal" className="btn btn-error btn-xs">Delete</label>
                                     </td>
                                     <td>
-                                        <button className="btn btn-warning btn-xs">Pay Now</button>
+                                        <button className="btn btn-warning btn-xs">Play Ad</button>
                                     </td>
                                 </tr>)
                             }

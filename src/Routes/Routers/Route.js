@@ -31,6 +31,10 @@ export const router = createBrowserRouter([
                 element: <Categories></Categories>
             },
             {
+                path: '/blog',
+                element: <Categories></Categories>
+            },
+            {
                 path: '/categories/:name',
                 element: <PrivetRoute><Category></Category></PrivetRoute>,
                 loader: ({ params }) => fetch(`${process.env.REACT_APP_server_url}/categories/${params.name}`)
