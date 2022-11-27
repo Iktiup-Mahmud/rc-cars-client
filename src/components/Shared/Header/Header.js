@@ -16,6 +16,7 @@ const Header = () => {
     const menuItems = <React.Fragment>
         <li><Link to='/home'>Home</Link></li>
         <li><Link to='/categories'>Categories</Link></li>
+        <li><Link to='/blog'>Blog</Link></li>
         {
             user
                 ?
