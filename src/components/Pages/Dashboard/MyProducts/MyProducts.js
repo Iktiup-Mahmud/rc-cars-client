@@ -41,6 +41,24 @@ const MyProducts = () => {
             })
     }
 
+    const handelAdvertise = (product) => {
+        fetch(`${process.env.REACT_APP_server_url}/advertiseProduct/${product._id}`, {
+            method: 'PUT',
+            headers: {
+                authorization: `bearer ${localStorage.getItem('accessToken')}`
+            }
+        })
+            .then(res => res.json())
+            .then(result => {
+                console.log(result)
+                if (result.modifiedCount > 0) {
+                    refetch()
+                    toast.success(`${product.name} advertised successfully`)
+                }
+            })
+
+    }
+
     const closeModal = () => {
         setDeleteProduct(null)
     }
@@ -93,7 +111,13 @@ const MyProducts = () => {
                                         <label onClick={() => setDeleteProduct(product)} htmlFor="confirmation-modal" className="btn btn-error btn-xs">Delete</label>
                                     </td>
                                     <td>
-                                        <button className="btn btn-warning btn-xs">Play Ad</button>
+                                        {
+                                            product?.isAdvertised === 'true'
+                                            ?
+                                                <button className="btn btn-success btn-xs">Ad running</button>
+                                            :
+                                                <button onClick={() => handelAdvertise(product)} className="btn btn-warning btn-xs">Play Ad</button>
+                                        }
                                     </td>
                                 </tr>)
                             }

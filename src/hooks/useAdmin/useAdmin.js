@@ -14,7 +14,6 @@ const useAdmin = email => {
                     setIsAdminLoading(false)
                 })
         }
-
     },[email])
     return [isAdmin, isAdminLoading]
 }

@@ -24,7 +24,7 @@ const Ads = () => {
     return (
         <div className='mt-10 mb-20'>
             <h1 className='mt-20 mb-10 font-semibold text-4xl'>Advertisement</h1>
-            <div className="carousel w-2/3 mx-auto h-64 gap-10">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 full mx-20 gap-10">
                 {
                     products?.map((product, i) => <div key={i} className="card w-96 bg-base-100 shadow-xl border-4">
                         <figure><img src={product.img} alt="Shoes" className='h-48' /></figure>
