@@ -5,7 +5,7 @@ const HomeCategories = () => {
 
     const [categories, setCategories] = useState([])
 
-    console.log(categories)
+    // console.log(categories)
 
     useEffect(() => {
         fetch(`${process.env.REACT_APP_server_url}/categories`)

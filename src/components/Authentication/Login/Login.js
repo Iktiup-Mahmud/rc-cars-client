@@ -3,6 +3,7 @@ import { FaGoogle } from "react-icons/fa";
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { GoogleAuthProvider } from 'firebase/auth';
 import { AuthContext } from '../../../context/AuthProvider/AuthProvider';
+import useToken from '../../../hooks/useToken/useToken';
 
 
 
@@ -12,9 +13,16 @@ const Login = () => {
     const { login, loginProvider } = useContext(AuthContext);
     const providerGoogle = new GoogleAuthProvider();
 
+    const [createdUserEmail, setCreatedUserEmail] = useState('')
+    const [token] = useToken(createdUserEmail)
+
     const navigate = useNavigate();
     const location = useLocation();
     const from = location.state?.from?.pathname || '/'
+
+    if(token){
+        navigate(from)
+    }
 
     const handelSubmit = e => {
         e.preventDefault()
@@ -65,13 +73,15 @@ const Login = () => {
         })
             .then(res => res.json())
             .then(data => {
-                console.log('saver user', data)
+                console.log('saved user', data, email)
+                setCreatedUserEmail(email)
             })
             .catch(err => {
                 console.error(err)
             })
     }
 
+    
 
     return (
         <div className="hero min-h-screen bg-base-200">
@@ -102,18 +112,18 @@ const Login = () => {
                             <button className="btn btn-primary font-bold">Login</button>
                         </div>
                         <div className="divider">OR</div>
-                        <div className="form-control">
+                        <div>
+                            <p>Don't have an account?<Link to='/signup' className='link link-info'>Please Signup</Link></p>
+                        </div>
+                    </form>
+                        <div onClick={handelGoogleLogin} className="mb-10 w-full">
                             <button className="btn btn-primary">
-                                <div onClick={handelGoogleLogin} className='flex justify-between'>
+                                <div  className='flex justify-between'>
                                     <FaGoogle className='' />
                                     <p className='pl-3 font-bold'>Google</p>
                                 </div>
                             </button>
                         </div>
-                        <div>
-                            <p>Don't have an account?<Link to='/signup' className='link link-info'>Please Signup</Link></p>
-                        </div>
-                    </form>
                 </div>
             </div>
         </div>

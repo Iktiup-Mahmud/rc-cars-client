@@ -4,6 +4,7 @@ import { FaGoogle } from "react-icons/fa";
 import toast from 'react-hot-toast'
 import { AuthContext } from '../../../context/AuthProvider/AuthProvider';
 import { GoogleAuthProvider } from 'firebase/auth';
+import useToken from '../../../hooks/useToken/useToken';
 
 const SignUp = () => {
     const [error, setError] = useState('');
@@ -12,6 +13,13 @@ const SignUp = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const from = location.state?.from?.pathname || '/'
+
+    const [createdUserEmail, setCreatedUserEmail] = useState('')
+    const [token] = useToken(createdUserEmail)
+
+    if (token) {
+        navigate(from)
+    }
 
     const handelSubmit = (e) => {
         e.preventDefault()
@@ -35,7 +43,6 @@ const SignUp = () => {
                         saveUserToDB(name, email, usert, isVerified)
                         console.log('ok')
                         form.reset()
-                        navigate(from, { replace: true })
                     })
             })
             .catch(err => {
@@ -71,6 +78,8 @@ const SignUp = () => {
         })
             .then(res => res.json())
             .then(data => {
+                setCreatedUserEmail(email)
+                console.log(email)
                 console.log('saver user', data)
             })
             .catch(err => {
