@@ -40,7 +40,7 @@ const SignUp = () => {
             })
             .catch(err => {
                 console.error(err.message)
-                toast.error(err.message)
+                // toast.error(err.message)
             })
     }
 
@@ -48,7 +48,10 @@ const SignUp = () => {
         loginProvider(providerGoogle)
             .then(res => {
                 const user = res.user;
+                const usert = 'normal';
+                const isVerified = "false"
                 console.log(user)
+                saveUserToDB(user.displayName, user.email, usert, isVerified)
                 navigate(from, { replace: true })
             })
             .catch(error => {

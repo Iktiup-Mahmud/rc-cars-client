@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FaCheckSquare } from "react-icons/fa";
 import Loading from '../../Shared/Loading/Loading';
 import BookingModal from './BookingModal';
@@ -8,21 +8,31 @@ const SingleProduct = ({ product }) => {
     const { name, img, location, resale_price, original_price, years_of_use, posted_time, seller_name, seller_email } = product
 
     const [modalData, setModalData] = useState(null)
+    const [isVerified,  setIsVerified] = useState(false)
 
-    const { data : isVerified = false , isLoading, refetch } = useQuery({
-        queryKey: ['products', seller_email],
-        queryFn: async () => {
-            const res = await fetch(`${process.env.REACT_APP_server_url}/sellerMailVerify?email=${seller_email}`)
-            const data = await res.json()
-            return data
-        }
-    })
+    // const { data : isVerified  , isLoading, refetch } = useQuery({
+    //     queryKey: ['products', seller_email],
+    //     queryFn: async () => {
+    //         const res = await fetch(`${process.env.REACT_APP_server_url}/sellerMailVerify?email=${seller_email}`)
+    //         const data = await res.json()
+    //         return data.isV
+    //     }
+    // })
     
-    refetch()
+    // refetch()
 
-    if(isLoading){
-        return <Loading></Loading>
-    }
+    useEffect( () => {
+        fetch(`${process.env.REACT_APP_server_url}/sellerMailVerify?email=${seller_email}`)
+            .then(res => res.json())
+            .then(data => {
+                console.log(data)
+                setIsVerified(data.isVerified)
+            })
+    },[seller_email])
+
+    // if(isLoading){
+    //     return <Loading></Loading>
+    // }
     console.log(seller_email, isVerified)
 
     return (
@@ -33,9 +43,9 @@ const SingleProduct = ({ product }) => {
                 <div className='flex'>
                     <p className='text-left font-semibold text-xl'>Seller Name: {seller_name}</p>
                     {
-                        (isVerified === true)
-                        ? <FaCheckSquare className='align-center ml-2 mt-2 text-blue-600'></FaCheckSquare>
-                        : <></>
+                        isVerified 
+                        && <FaCheckSquare className='align-center ml-2 mt-2 text-blue-600'></FaCheckSquare>
+                        // : <></>
                     }
                 </div>
                 <p className='text-left text-lg'>Location: {location}</p>

@@ -42,12 +42,33 @@ const Login = () => {
         loginProvider(providerGoogle)
             .then(res => {
                 const user = res.user;
+                const usert = 'normal';
+                const isVerified = "false"
                 console.log(user)
+                saveUserToDB(user.displayName, user.email, usert, isVerified)
                 navigate(from, { replace: true })
             })
             .catch(error => {
                 setError(error.message)
                 console.error(error)
+            })
+    }
+
+    const saveUserToDB = (name, email, role) => {
+        const user = { name, email, role }
+        fetch(`${process.env.REACT_APP_server_url}/adduser`, {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(user)
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log('saver user', data)
+            })
+            .catch(err => {
+                console.error(err)
             })
     }
 
