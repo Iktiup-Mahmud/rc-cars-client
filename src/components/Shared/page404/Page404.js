@@ -8,7 +8,8 @@ const Page404 = () => {
             <img src="https://miro.medium.com/max/978/1*52_FzWNt0rWi6X-nUF0OBw.png" className='w-56' alt="" />
                 <h1 className="text-9xl font-extrabold text-white tracking-widest">404</h1>
                 <div className="bg-[#FF6A3D] px-2 text-sm rounded rotate-12 absolute">
-                    Page Not Found
+                    Page Not Found <br />
+                    Please login again 
                 </div>
                 <button className="mt-5">
                     <Link to='/'

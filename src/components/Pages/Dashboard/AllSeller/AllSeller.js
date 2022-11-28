@@ -12,7 +12,11 @@ const AllSeller = () => {
     const { data: allseller = [], isLoading, refetch } = useQuery({
         queryKey: ['allseller'],
         queryFn: async () => {
-            const res = await fetch(url)
+            const res = await fetch(url, {
+                headers: {
+                    authorization: `bearer ${localStorage.getItem('accessToken')}`
+                }
+            })
             const data = await res.json()
             return data
         }
@@ -20,7 +24,10 @@ const AllSeller = () => {
     
     const handelDeleteSeller = (seller) => {
         fetch(`${process.env.REACT_APP_server_url}/deleteSeller/${seller._id}`, {
-            method: 'DELETE'
+            method: 'DELETE', 
+            headers: {
+                authorization: `bearer ${localStorage.getItem('accessToken')}`
+            }
         })
             .then(res => res.json())
             .then(result => {
@@ -35,6 +42,9 @@ const AllSeller = () => {
     const handelVerify = (id) => {
         fetch(`${process.env.REACT_APP_server_url}/user/verify/${id}`, {
             method: 'PUT',
+            headers: {
+                authorization: `bearer ${localStorage.getItem('accessToken')}`
+            }
         })
             .then(res=> res.json())
             .then(data => {

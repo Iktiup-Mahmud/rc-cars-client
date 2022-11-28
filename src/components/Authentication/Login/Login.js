@@ -4,6 +4,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { GoogleAuthProvider } from 'firebase/auth';
 import { AuthContext } from '../../../context/AuthProvider/AuthProvider';
 import useToken from '../../../hooks/useToken/useToken';
+import toast from 'react-hot-toast';
 
 
 
@@ -21,7 +22,7 @@ const Login = () => {
     const from = location.state?.from?.pathname || '/'
 
     if(token){
-        navigate(from)
+        navigate(from, {replace: true})
     }
 
     const handelSubmit = e => {
@@ -31,18 +32,20 @@ const Login = () => {
         const email = form.email.value;
         const password = form.password.value;
 
-        console.log(email, password)
+        // console.log(email, password)
 
         login(email, password)
             .then(res => {
                 const user = res.user;
+                setCreatedUserEmail(email)
                 console.log(user)
-                form.reset()
-                navigate(from, { replace: true })
+                toast.success('Login succesfull')
+                // form.reset()
             })
             .catch(error => {
                 setError(error.message)
                 console.error(error)
+                toast.error(error.message)
             })
     }
 
@@ -54,7 +57,6 @@ const Login = () => {
                 const isVerified = "false"
                 console.log(user)
                 saveUserToDB(user.displayName, user.email, usert, isVerified)
-                navigate(from, { replace: true })
             })
             .catch(error => {
                 setError(error.message)

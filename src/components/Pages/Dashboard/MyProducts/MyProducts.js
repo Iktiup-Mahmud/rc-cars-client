@@ -26,7 +26,10 @@ const MyProducts = () => {
 
     const handelDeleteProduct = (product) => {
         fetch(`${process.env.REACT_APP_server_url}/deleteProduct/${product._id}`, {
-            method: 'DELETE'
+            method: 'DELETE',
+            headers: {
+                authorization: `bearer ${localStorage.getItem('accessToken')}`
+            }
         })
             .then(res => res.json())
             .then(result => {

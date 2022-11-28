@@ -27,21 +27,12 @@ const Ads = () => {
             <div className="carousel w-2/3 mx-auto h-64 gap-10">
                 {
                     products?.map((product, i) => <div key={i} className="card w-96 bg-base-100 shadow-xl border-4">
-                        <figure><img src={product.img} alt="Shoes" className='h-64' /></figure>
-                        <div className="">
-                            <h2 className="card-title">{product.name}</h2>
+                        <figure><img src={product.img} alt="Shoes" className='h-48' /></figure>
+                        <div className="text-center">
+                            <h2 className="text-center font-semibold text-2xl mt-2">{product.name}</h2>
                         </div>
                     </div>
                 )}
-
-
-                {/* <div id="slide2" className="carousel-item relative w-full">
-                    <img src="https://placeimg.com/800/200/arch" alt='' className="w-full" />
-                    <div className="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
-                        <a href="#slide1" className="btn btn-circle">❮</a>
-                        <a href="#slide3" className="btn btn-circle">❯</a>
-                    </div>
-                </div> */}
             </div>
         </div>
     );

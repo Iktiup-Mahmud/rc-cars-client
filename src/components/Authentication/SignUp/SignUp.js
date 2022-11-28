@@ -18,7 +18,7 @@ const SignUp = () => {
     const [token] = useToken(createdUserEmail)
 
     if (token) {
-        navigate(from)
+        navigate(from, {replace: true})
     }
 
     const handelSubmit = (e) => {
@@ -47,7 +47,7 @@ const SignUp = () => {
             })
             .catch(err => {
                 console.error(err.message)
-                // toast.error(err.message)
+                toast.error(err.message)
             })
     }
 
@@ -59,7 +59,6 @@ const SignUp = () => {
                 const isVerified = "false"
                 console.log(user)
                 saveUserToDB(user.displayName, user.email, usert, isVerified)
-                navigate(from, { replace: true })
             })
             .catch(error => {
                 setError(error.message)

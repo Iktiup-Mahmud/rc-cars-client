@@ -9,10 +9,14 @@ const MyBookings = () => {
 
     const url = `${process.env.REACT_APP_server_url}/bookings?email=${user?.email}`
 
-    const { data: bookings = [], isLoading } = useQuery({
+    const { data: bookings = [], isLoading, refetch } = useQuery({
         queryKey: ['bookings', user?.email],
         queryFn: async () => {
-            const res = await fetch(url)
+            const res = await fetch(url, {
+                headers: {
+                    authorization: `bearer ${localStorage.getItem('accessToken')}`
+                }
+            })
             const data = res.json()
             return data
         }
@@ -21,8 +25,9 @@ const MyBookings = () => {
     if (isLoading) {
         return <Loading></Loading>
     }
+    refetch()
 
-    console.log(bookings)
+    // console.log(bookings)
     return (
         <div>
             <h1 className='text-3xl mb-7 font-semibold'>My Bookings</h1>

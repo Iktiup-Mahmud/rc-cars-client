@@ -12,13 +12,16 @@ import Home from "../../components/Pages/Home/Home/Home";
 import Page404 from "../../components/Shared/page404/Page404";
 import DashBoardLayout from "../../layout/DashBoardLayout";
 import Main from "../../layout/Main";
+import AdminRoute from "../AdminRoute/AdminRoute";
 import PrivetRoute from "../PrivetRoute/PrivetRoute";
+import SellerRoute from "../SellerRoute/SellerRoute";
 
 
 export const router = createBrowserRouter([
     {
         path: '/',
         element: <Main></Main>,
+        errorElement: <Page404></Page404>,
         children: [
             {
                 path: '/',
@@ -54,6 +57,7 @@ export const router = createBrowserRouter([
     {
         path: '/dashboard',
         element: <PrivetRoute><DashBoardLayout></DashBoardLayout></PrivetRoute>,
+        errorElement: <Page404></Page404>,
         children: [
             {
                 path: '/dashboard',
@@ -65,15 +69,15 @@ export const router = createBrowserRouter([
             },
             {
                 path: '/dashboard/add-product',
-                element: <AddProduct></AddProduct>
+                element: <SellerRoute><AddProduct></AddProduct></SellerRoute>
             },
             {
                 path: '/dashboard/my-products',
-                element: <MyProducts></MyProducts>
+                element: <SellerRoute><MyProducts></MyProducts></SellerRoute>
             },
             {
                 path: '/dashboard/all-seller',
-                element: <AllSeller></AllSeller>
+                element: <AdminRoute><AllSeller></AllSeller></AdminRoute>
             }
         ]
     },
