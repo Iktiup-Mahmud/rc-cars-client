@@ -9,7 +9,10 @@ const Header = () => {
 
     const handelLogout = () => {
         logOut()
-            .then(res => console.log('logout successfull'))
+            .then(res => {
+                console.log('logout successfull')
+                localStorage.removeItem('accessToken')
+            })
             .catch(err => console.log(err))
     }
 
