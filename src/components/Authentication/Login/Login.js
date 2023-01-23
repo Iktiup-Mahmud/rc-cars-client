@@ -118,14 +118,14 @@ const Login = () => {
                             <p>Don't have an account?<Link to='/signup' className='link link-info'>Please Signup</Link></p>
                         </div>
                     </form>
-                        <div onClick={handelGoogleLogin} className="mb-10 w-full">
-                            <button className="btn btn-primary">
+                        {/* <div className="mb-10 w-full"> */}
+                    <button className="btn btn-primary mx-8 mb-5" onClick={handelGoogleLogin}>
                                 <div  className='flex justify-between'>
                                     <FaGoogle className='' />
                                     <p className='pl-3 font-bold'>Google</p>
                                 </div>
                             </button>
-                        </div>
+                        {/* </div> */}
                 </div>
             </div>
         </div>
