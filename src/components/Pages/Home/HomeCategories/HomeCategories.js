@@ -18,7 +18,7 @@ const HomeCategories = () => {
 
     return (
         <div className='my-10'>
-            <h1 className='text-5xl my-10'>Categories</h1>
+            <h1 className='text-5xl mb-10'>Categories</h1>
             <div className='mx-auto'>
                 <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-20 mx-10'>
                     {
